@@ -6,95 +6,72 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
-using TurtleWPF.Model;
 using System.Windows.Input;
 namespace TurtleWPF.AppViewModel
 {
-    public class ViewModel: INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
+{
+    private Turtle turtle;
+    private string _resultState;
+
+    public ViewModel()
     {
-        private Turtle turtle;
+        turtle = new Turtle(); // Инстанцирование бизнес-логики
+        ExecuteCommand = new RelayCommand(SaveCommand, CanExecuteCommand);
+    }
 
-        public ObservableCollection<Turtle> Turtles { get; set; }
+    public bool IsMoveChecked { get; set; }
+    public bool IsColorChecked { get; set; }
+    public bool IsPenDownChecked { get; set; }
 
-        RelayCommand? addCommand;
-        public RelayCommand AddCommand
+    public string MoveParameter { get; set; }
+    public string ColorParameter { get; set; }
+
+    public string ResultState
+    {
+        get => _resultState;
+        set
         {
-            get
-            {
-                return addCommand ??
-                  (addCommand = new RelayCommand(obj =>
-                  {
-                      Turtle turtle = new Turtle(" ", " ", "0");
-                      Turtles.Insert(0, turtle);
-                      SelectedTurtle = turtle;
-                  }));
-            
-            }
-        }
-
-        // команда удаления
-        RelayCommand? removeCommand;
-        public RelayCommand RemoveCommand
-        {
-            get
-            {
-                return removeCommand ??
-                  (removeCommand = new RelayCommand(obj =>
-                  {
-                      Turtle turtle = obj as Turtle;
-                      if (turtle != null)
-                      {
-                          Turtles.Remove(turtle);
-                      }
-                  },
-                 (obj) => Turtles.Count > 0));
-            }
-        }
-
-        RelayCommand? doubleCommand;
-        public RelayCommand DoubleCommand
-        {
-            get
-            {
-                return doubleCommand ??
-                    (doubleCommand = new RelayCommand(obj =>
-                    {
-                        Turtle? turtle = obj as Turtle;
-                        if (turtle != null)
-                        {
-                            Turtle phoneCopy = new Turtle(turtle.XCoord, turtle.YCoord, turtle.Angle);
-                            Turtles.Insert(0, phoneCopy);
-                        }
-                    }));
-            }
-        }
-
-        public Turtle SelectedTurtle
-        {
-            get { return turtle; }
-            set
-            {
-                turtle = value;
-                OnPropertyChanged("SelectedTurtle");
-            }
-        }
-
-        public ViewModel()
-        {
-            Turtles = new ObservableCollection<Turtle>
-            {
-                new Turtle ("100", "50", "90" ),
-                new Turtle ("100", "50", "90" ),
-                new Turtle ("100", "50", "90" ),
-                new Turtle ("100", "50", "90" )
-            };
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            _resultState = value;
+            OnPropertyChanged();
         }
     }
+
+    public ICommand ExecuteCommand { get; }
+
+    private bool CanExecuteCommand(object parameter)
+    {
+        return IsMoveChecked || IsColorChecked || IsPenDownChecked;
+    }
+
+        private void SaveCommand(object parameter)
+        {
+            if (IsMoveChecked && int.TryParse(MoveParameter, out int moveValue))
+            {
+                turtle.Move(moveValue);
+            }
+            else if (IsColorChecked && !string.IsNullOrWhiteSpace(ColorParameter))
+            {
+                turtle.ChangeColor(ColorParameter);
+            }
+            else if (IsPenDownChecked)
+            {
+                turtle.PenDown();
+            }
+
+            ResultState = turtle.GetState(); // Обновляем результат
+        }
+
+
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+
 }

@@ -1,40 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace TurtleWPF
+public class RelayCommand : ICommand
 {
-    public class RelayCommand: ICommand
+    private readonly Action<object> _execute;
+    private readonly Predicate<object> _canExecute;
+
+    public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
     {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
 
-        private Action<object> execute;
-        private Func<object, bool> canExecute;
+    public bool CanExecute(object parameter)
+    {
+        return _canExecute?.Invoke(parameter) ?? true;
+    }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+    public void Execute(object parameter)
+    {
+        _execute(parameter);
+    }
 
-        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute;
-        }
-
-        public bool CanExecute(object? parameter)
-        {
-            return this.canExecute == null || this.canExecute(parameter);
-        }
-
-        public void Execute(object? parameter)
-        {
-            this.execute(parameter);
-        }
-
-
+    public event EventHandler CanExecuteChanged
+    {
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 }
