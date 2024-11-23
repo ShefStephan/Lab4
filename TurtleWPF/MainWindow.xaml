@@ -11,14 +11,11 @@
             <RadioButton Content="Move" IsChecked="{Binding IsMoveChecked}" />
             <TextBox Text="{Binding MoveParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
 
-            <RadioButton Content="Color" IsChecked="{Binding IsColorChecked}" />
-            <TextBox Text="{Binding ColorParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
-
-            <RadioButton Content="PenDown" IsChecked="{Binding IsPenDownChecked}" />
+            
         </StackPanel>
 
         <!-- Кнопка сохранения команды -->
-        <Button Content="Сохранить команду" Command="{Binding ExecuteCommand}" 
+        <Button Content="Save command" Command="{Binding ExecuteCommand}" 
                 HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" 
                 IsEnabled="{Binding CanExecuteCommand}" />
 
@@ -27,5 +24,8 @@
             <TextBlock Text="Result:" />
             <TextBlock Text="{Binding ResultState}" Width="200" />
         </StackPanel>
+
+        <Button Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                Width="80" Height="30" Click="ExitButton_Click" />
     </Grid>
 </Window>
