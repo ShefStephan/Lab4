@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace TurtleWPF.DataBase
 {
@@ -14,7 +15,7 @@ namespace TurtleWPF.DataBase
         {
             using (var context = new TurtleAppContext())
             {
-                return context.TurtleStatus.OrderByDescending(t => t.Id).FirstOrDefault();
+                return await context.TurtleStatus.OrderByDescending(t => t.Id).FirstOrDefaultAsync();
 
             }
         }
@@ -23,14 +24,14 @@ namespace TurtleWPF.DataBase
         {
             using (var context = new TurtleAppContext())
             {
-                return context.TurtleCoords.OrderByDescending(t => t.Id).FirstOrDefault();
+                return await context.TurtleCoords.OrderByDescending(t => t.Id).FirstOrDefaultAsync();
             }
         }
         public async Task<List<CommandHistory>> GetCommands()
         {
             using (var context = new TurtleAppContext())  // using гарантирует освобождение
             {
-                return context.CommandHistory.ToList();
+                return await context.CommandHistory.ToListAsync();
             }
         }
 
@@ -38,7 +39,7 @@ namespace TurtleWPF.DataBase
         {
             using (var context = new TurtleAppContext())
             {
-                return context.Figure.ToList();
+                return await context.Figure.ToListAsync();
             }
         }
 

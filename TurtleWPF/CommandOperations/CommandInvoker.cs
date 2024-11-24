@@ -11,7 +11,7 @@ namespace TurtleWPF.CommandOperations
     public class CommandInvoker
     {
 
-        private Turtle turtle;
+        public Turtle turtle;
 
         public CommandInvoker(Turtle turtle)
         {

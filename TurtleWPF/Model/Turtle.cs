@@ -87,36 +87,4 @@
     }
 
 
-    //private int xCoord;
-    //private int yCoord;
-    //private bool penCondition;
-    //private string color;
-    //private int angle;
-    //private int width;
-
-    //public Turtle()
-    //{
-    //    xCoord = 0;
-    //    yCoord = 0;
-    //    angle = 0;
-    //    penCondition = true;
-    //    color = "black";
-    //    width = 1;
-    //}
-
-    //public void Move(int value) => xCoord += value;
-
-    //public void Angle(int value) => angle += value;
-
-    //public void ChangeColor(string newColor) => color = newColor;
-
-    //public void PenDown() => penCondition = true;
-    //public void PenUP() => penCondition = false;
-
-
-    //public string GetState() => $"coords: ({xCoord}, {yCoord}), \n" +
-    //                            $"angle: {angle}, \n" +
-    //                            $"penCondition: {penCondition}, \n" +
-    //                            $"color: {color}, \n" +
-    //                            $"width: {width}";
 }

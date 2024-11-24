@@ -21,13 +21,22 @@ namespace TurtleWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        Turtle turtle;
+        private Turtle turtle = new Turtle();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            using (var context = new TurtleAppContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
+
             DataContext = new ViewModel(new DBAppReader(), new DBAppWriter(), new CommandInvoker(turtle));  // Устанавливаем контекст данных для привязки
         }
+         
+
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {

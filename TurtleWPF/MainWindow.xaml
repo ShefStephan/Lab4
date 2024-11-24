@@ -11,7 +11,24 @@
             <RadioButton Content="Move" IsChecked="{Binding IsMoveChecked}" />
             <TextBox Text="{Binding MoveParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
 
-            
+            <RadioButton Content="Angle" IsChecked="{Binding IsAngleChecked}" />
+            <TextBox Text="{Binding AngleParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+
+            <RadioButton Content="Width" IsChecked="{Binding IsWidthChecked}" />
+            <TextBox Text="{Binding WidthParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+
+            <RadioButton Content="Color" IsChecked="{Binding IsColorChecked}" />
+            <TextBox Text="{Binding ColorParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+
+            <RadioButton Content="PenUp" IsChecked="{Binding IsPenUpChecked}" />
+
+            <RadioButton Content="PenDown" IsChecked="{Binding IsPenDownChecked}" />
+
+            <RadioButton Content="History" IsChecked="{Binding IsHistoryChecked}" />
+
+            <RadioButton Content="ListFigures" IsChecked="{Binding IsListFiguresChecked}" />
+
+
         </StackPanel>
 
         <!-- Кнопка сохранения команды -->
@@ -20,7 +37,7 @@
                 IsEnabled="{Binding CanExecuteCommand}" />
 
         <!-- Результаты справа -->
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="center" Margin="10">
             <TextBlock Text="Result:" />
             <TextBlock Text="{Binding ResultState}" Width="200" />
         </StackPanel>
