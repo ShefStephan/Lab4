@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Turtle Command Interface" Height="400" Width="600"
-        xmlns:viewmodel="clr-namespace:TurtleWPF.AppViewModel">
+        xmlns:model="clr-namespace:TurtleWPF.Model">
 
 
 
     <!-- DataTemplate для отображения статуса черепашки -->
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodel:TurtleState}">
+        <DataTemplate DataType="{x:Type model:TurtleState}">
             <StackPanel>
                 <TextBlock Text="{Binding Coordinates}" />
                 <TextBlock Text="{Binding Angle}" />
@@ -68,7 +68,7 @@
 
     <Grid >
         <!-- команды черепашки -->
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,10">
             <TextBlock Text="Commands" Style="{StaticResource ResultState}"/>
             <Rectangle Height="15"/>
             <RadioButton Content="Move" IsChecked="{Binding IsMoveChecked}" 
@@ -112,7 +112,7 @@
 
         <!-- кнопка сохранения команды -->
         <Button Content="Save command" Command="{Binding ExecuteCommand}" 
-                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" 
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,10" 
                 IsEnabled="{Binding CanExecuteCommand}" 
                 Style="{StaticResource ActiveButton}"/>
 
@@ -124,7 +124,7 @@
         </StackPanel>
 
         <!-- результат вывода истории команд-->
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="30,10">
             <TextBlock Text="History" Style="{StaticResource ResultState}"/>
             <Rectangle Height="15"/>
             <ContentControl Content="{Binding ResultState}" />
@@ -138,7 +138,7 @@
         </StackPanel>
 
         <!-- нопка выхода -->
-        <Button Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+        <Button Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="30,10"
                 Width="80" Height="30" Click="ExitButton_Click" 
                 Style="{StaticResource ActiveButton}"/>
     </Grid>

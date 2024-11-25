@@ -7,25 +7,19 @@ using System.Windows.Input;
 using TurtleWPF.CommandOperations;
 using TurtleWPF.TurtleCommands;
 using TurtleWPF.DataBase;
+using TurtleWPF.Model;
 
 namespace TurtleWPF.AppViewModel
 {
     // Класс для хранения состояния черепашки
-    public class TurtleState
-    {
-        public string Coordinates { get; set; }
-        public string Angle { get; set; }
-        public string Color { get; set; }
-        public string PenCondition { get; set; }
-        public string Width { get; set; }
-    }
+    
 
     public class ViewModel : INotifyPropertyChanged
     {
         private Turtle turtle;
-        private TurtleState _turtleState;
-        private string _resultState;
-        private string _resultFigureState;
+        private TurtleState turtleState;
+        private string resultState;
+        private string resultFigureState;
         private CommandInvoker invoker;
         private IDBAppReader dataBaseAppReader;
         private IDBAppWriter dataBaseAppWriter;
@@ -58,30 +52,30 @@ namespace TurtleWPF.AppViewModel
 
         public TurtleState TurtleState
         {
-            get => _turtleState;
+            get => turtleState;
             set
             {
-                _turtleState = value;
+                turtleState = value;
                 OnPropertyChanged();
             }
         }
 
         public string ResultState
         {
-            get => _resultState;
+            get => resultState;
             set
             {
-                _resultState = value;
+                resultState = value;
                 OnPropertyChanged();
             }
         }
 
         public string ResultFigureState
         {
-            get => _resultFigureState;
+            get => resultFigureState;
             set
             {
-                _resultFigureState = value;
+                resultFigureState = value;
                 OnPropertyChanged();
             }
         }
