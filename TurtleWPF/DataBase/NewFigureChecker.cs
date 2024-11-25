@@ -72,19 +72,19 @@ namespace TurtleWPF.DataBase
                         switch (rowCount - 1)
                         {
                             case 3:
-                                figure = "треугольник";
+                                figure = "triangle";
                                 break;
                             case 4:
-                                figure = "квадрат";
+                                figure = "square";
                                 break;
                             case 5:
-                                figure = "пятиугольник";
+                                figure = "pentagon";
                                 break;
                             case 6:
-                                figure = "шестиугольник";
+                                figure = "hexagon";
                                 break;
                             case 7:
-                                figure = "семиугольник";
+                                figure = "heptagon";
                                 break;
 
                         }
