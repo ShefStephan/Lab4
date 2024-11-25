@@ -4,45 +4,142 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Turtle Command Interface" Height="400" Width="600">
-    <Grid>
-        <!-- Команды слева -->
+        Title="Turtle Command Interface" Height="400" Width="600"
+        xmlns:viewmodel="clr-namespace:TurtleWPF.AppViewModel">
+
+
+
+    <!-- DataTemplate для отображения статуса черепашки -->
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodel:TurtleState}">
+            <StackPanel>
+                <TextBlock Text="{Binding Coordinates}" />
+                <TextBlock Text="{Binding Angle}" />
+                <TextBlock Text="{Binding Color}" />
+                <TextBlock Text="{Binding PenCondition}" />
+                <TextBlock Text="{Binding Width}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <Style x:Key="CommandRadioButton">
+            <Setter Property="Control.FontFamily" Value="Wak" />
+            <Setter Property="Control.FontSize" Value="12"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True">
+                    <Setter Property="Control.FontWeight" Value="Bold" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ResultState">
+            <Setter Property="Control.FontFamily" Value="Wak" />
+            <Setter Property="Control.FontSize" Value="16"/>
+            <Setter Property="Control.BorderBrush" Value="Black"/>
+        </Style>
+
+        <Style x:Key="ActiveButton">
+            <Style.Setters>
+                <Setter Property="Control.FontFamily" Value="Wak" />
+                <Setter Property="Control.FontSize" Value="14"/>
+                <Setter Property="Control.BorderBrush" Value="Black"/>
+                <Setter Property="Control.Background" Value="White"/>
+                <Setter Property="Control.Foreground" Value="Black"/>
+                <Setter Property="Control.Padding" Value="5"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Control.Background" Value="Black"/>
+                    <Setter Property="Control.Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+        <Style x:Key="TextBlockParametr">
+            <Setter Property="Control.FontFamily" Value="Wak" />
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.Background" Value="Gainsboro"/>
+            <Setter Property="Control.Foreground" Value="Gray"/>
+            <Setter Property="Control.BorderBrush" Value="White"/>
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid >
+        <!-- команды черепашки -->
         <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10">
-            <RadioButton Content="Move" IsChecked="{Binding IsMoveChecked}" />
-            <TextBox Text="{Binding MoveParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+            <TextBlock Text="Commands" Style="{StaticResource ResultState}"/>
+            <Rectangle Height="15"/>
+            <RadioButton Content="Move" IsChecked="{Binding IsMoveChecked}" 
+            Style="{StaticResource CommandRadioButton}"/>
+            <TextBox Text="{Binding MoveParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" 
+                     Style="{StaticResource TextBlockParametr}"/>
 
-            <RadioButton Content="Angle" IsChecked="{Binding IsAngleChecked}" />
-            <TextBox Text="{Binding AngleParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+            <RadioButton Content="Angle" IsChecked="{Binding IsAngleChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <TextBox Text="{Binding AngleParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" 
+                     Style="{StaticResource TextBlockParametr}"/>
 
-            <RadioButton Content="Width" IsChecked="{Binding IsWidthChecked}" />
-            <TextBox Text="{Binding WidthParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+            <RadioButton Content="Width" IsChecked="{Binding IsWidthChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <TextBox Text="{Binding WidthParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" 
+                     Style="{StaticResource TextBlockParametr}"/>
 
-            <RadioButton Content="Color" IsChecked="{Binding IsColorChecked}" />
-            <TextBox Text="{Binding ColorParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" />
-
-            <RadioButton Content="PenUp" IsChecked="{Binding IsPenUpChecked}" />
-
-            <RadioButton Content="PenDown" IsChecked="{Binding IsPenDownChecked}" />
-
-            <RadioButton Content="History" IsChecked="{Binding IsHistoryChecked}" />
-
-            <RadioButton Content="ListFigures" IsChecked="{Binding IsListFiguresChecked}" />
-
-
+            <RadioButton Content="Color" IsChecked="{Binding IsColorChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <TextBox Text="{Binding ColorParameter, UpdateSourceTrigger=PropertyChanged}" Width="100" 
+                     Style="{StaticResource TextBlockParametr}" />
+            <Rectangle Height="9" RenderTransformOrigin="0.5,0.5" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <RadioButton Content="PenUp" IsChecked="{Binding IsPenUpChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <RadioButton Content="PenDown" IsChecked="{Binding IsPenDownChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <RadioButton Content="History" IsChecked="{Binding IsHistoryChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
+            <RadioButton Content="ListFigures" IsChecked="{Binding IsListFiguresChecked}" 
+                         Style="{StaticResource CommandRadioButton}"/>
         </StackPanel>
 
-        <!-- Кнопка сохранения команды -->
+        <!-- кнопка сохранения команды -->
         <Button Content="Save command" Command="{Binding ExecuteCommand}" 
                 HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" 
-                IsEnabled="{Binding CanExecuteCommand}" />
+                IsEnabled="{Binding CanExecuteCommand}" 
+                Style="{StaticResource ActiveButton}"/>
 
-        <!-- Результаты справа -->
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="center" Margin="10">
-            <TextBlock Text="Result:" />
-            <TextBlock Text="{Binding ResultState}" Width="200" />
+        <!-- результат вывода статуса черепагки -->
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+            <TextBlock Text="TurtleState" Style="{StaticResource ResultState}"/>
+            <Rectangle Height="15"/>
+            <ContentControl Content="{Binding TurtleState}" />
         </StackPanel>
 
+        <!-- результат вывода истории команд-->
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">
+            <TextBlock Text="History" Style="{StaticResource ResultState}"/>
+            <Rectangle Height="15"/>
+            <ContentControl Content="{Binding ResultState}" />
+        </StackPanel>
+
+        <!-- результат вывода фигур -->
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+            <TextBlock Text="Figures" Style="{StaticResource ResultState}"/>
+            <Rectangle Height="15"/>
+            <ContentControl Content="{Binding ResultFigureState}" />
+        </StackPanel>
+
+        <!-- нопка выхода -->
         <Button Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
-                Width="80" Height="30" Click="ExitButton_Click" />
+                Width="80" Height="30" Click="ExitButton_Click" 
+                Style="{StaticResource ActiveButton}"/>
     </Grid>
 </Window>
